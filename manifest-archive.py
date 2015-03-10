@@ -46,11 +46,6 @@ base = os.path.join(temp.name, name)
 os.mkdir(base)
 os.chdir(base)
 
-if args.output:
-    output = os.path.join(origdir, args.output)
-else:
-    output = os.path.join(origdir, "{}_{}.tar.xz".format(name, strftime("%Y%m%d")))
-
 # Build repo command
 cmd = ['repo', 'init']
 
@@ -72,6 +67,11 @@ if args.jobs:
 
 logging.info("Running: {}".format(str(cmd_sync)))
 ret = subprocess.call(cmd_sync)
+
+if args.output:
+    output = os.path.join(origdir, args.output)
+else:
+    output = os.path.join(origdir, "{}_{}.tar.xz".format(name, strftime("%Y%m%d")))
 
 logging.info("Creating tarball @ {}".format(output))
 os.chdir(temp.name)
